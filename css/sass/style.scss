@@ -7,9 +7,65 @@ $secondary : #FF79DA;
 $tertiary :   #99E2D0;
 $white : #FFFFFF;
 $black:#000000;
-
-%shadow {
-    box-shadow: 2px 2px 2px #808080;
+@keyframes openning {
+    0%,99% {
+        z-index: 1;
+        visibility: initial;
+    }
+}
+@keyframes loader {
+    0% {
+      top: 8px;
+      height: 64px;
+    }
+    50%, 100% {
+      top: 24px;
+      height: 32px;
+    }
+}
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+.loader {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.5);
+    animation: openning 4s ;
+    z-index: -1;
+    visibility: hidden;
+}
+.loader::after {
+    content: "Recherche de restaurant";
+}
+.loader div {
+    display: inline-block;
+    width: 16px;
+    margin: 10px;
+    animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.loader div:nth-child(1) {
+    animation-delay: -0.24s;
+    background-color: $primary;
+}
+.loader div:nth-child(2) {
+    animation-delay: -0.12s;
+    background-color: $secondary;
+}
+.loader div:nth-child(3) {
+    animation-delay: 0;
+    background-color: $tertiary;
 }
 * {
     font-family: 'Roboto';
@@ -47,6 +103,7 @@ form {
 }
 .fa-heart {
     font-size: xx-large;
+    height: fit-content;
     transition: color 400ms;
 
     &:hover {
@@ -89,7 +146,14 @@ form {
     padding: 15px 25px;
     border-radius: 30px;
     border-color: unset;
-    box-shadow: -1px -2px 0px #e7e7e7;
+    box-shadow: 2px 2px 2px lightgrey;
+    opacity: 1;
+    transition: opacity 400ms;
+
+    &:hover {
+        opacity: 0.7;
+        box-shadow: 3px 3px 3px grey;
+    }
 }
 main {
     padding: 1%;
@@ -196,12 +260,19 @@ footer {
     li {
         margin: 5px 0px;
     }
+    a {
+        color: inherit;
+    }
     i {
         margin-right: 5px;    
         width: 25px;
         font-size: 15px;
     }
 }
+/*-----------------------------------------------------------
+                            RETAURANT                       
+------------------------------------------------------------*/
+@import "restaurant/ordinateur.scss";
 @media only screen and (max-width: 992px) {
     #functioning {
         ol {
@@ -267,5 +338,3 @@ footer {
     }
 }
 
-/*restaurant*/
-@import "restaurant.scss"

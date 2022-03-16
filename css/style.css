@@ -1,6 +1,71 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Shrikhand&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+@keyframes openning {
+  0%, 99% {
+    z-index: 1;
+    visibility: initial;
+  }
+}
+@keyframes loader {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+.loader {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  animation: openning 4s;
+  z-index: -1;
+  visibility: hidden;
+}
+
+.loader::after {
+  content: "Recherche de restaurant";
+}
+
+.loader div {
+  display: inline-block;
+  width: 16px;
+  margin: 10px;
+  animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.loader div:nth-child(1) {
+  animation-delay: -0.24s;
+  background-color: #9356DC;
+}
+
+.loader div:nth-child(2) {
+  animation-delay: -0.12s;
+  background-color: #FF79DA;
+}
+
+.loader div:nth-child(3) {
+  animation-delay: 0;
+  background-color: #99E2D0;
+}
+
 * {
   font-family: "Roboto";
   box-sizing: border-box;
@@ -46,6 +111,7 @@ form {
 
 .fa-heart {
   font-size: xx-large;
+  height: fit-content;
   transition: color 400ms;
 }
 .fa-heart:hover {
@@ -88,7 +154,13 @@ form {
   padding: 15px 25px;
   border-radius: 30px;
   border-color: unset;
-  box-shadow: -1px -2px 0px #e7e7e7;
+  box-shadow: 2px 2px 2px lightgrey;
+  opacity: 1;
+  transition: opacity 400ms;
+}
+.my_button:hover {
+  opacity: 0.7;
+  box-shadow: 3px 3px 3px grey;
 }
 
 main {
@@ -200,10 +272,110 @@ footer ul {
 footer li {
   margin: 5px 0px;
 }
+footer a {
+  color: inherit;
+}
 footer i {
   margin-right: 5px;
   width: 25px;
   font-size: 15px;
+}
+
+/*-----------------------------------------------------------
+                            RETAURANT                       
+------------------------------------------------------------*/
+#restaurant header {
+  margin-bottom: -10px;
+}
+#restaurant header i {
+  position: absolute;
+  left: 30px;
+  top: 25px;
+}
+#restaurant header img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+#restaurant main {
+  padding: 0px 40px;
+  background-color: #f6f6f6;
+}
+#restaurant main h1 {
+  display: flex;
+  justify-content: space-between;
+  background-color: inherit;
+  padding: 30px 10px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  position: relative;
+  bottom: 70px;
+  margin-bottom: -80px;
+}
+#restaurant main .part_meal {
+  display: inline-block;
+  padding: 0px 10px;
+}
+#restaurant main .part_meal h2 {
+  font-variant-caps: all-small-caps;
+  font-weight: normal;
+}
+#restaurant main .part_meal h2::after {
+  content: "_____";
+  display: block;
+  margin: -15px 0px;
+  color: grey;
+}
+#restaurant main .part_meal li {
+  display: flex;
+  flex-wrap: nowrap;
+  font-weight: bold;
+  overflow: hidden;
+  margin: 40px 0px;
+  padding: 0px;
+  box-shadow: 2px 2px 2px grey;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 450px;
+  animation: appear 3s;
+}
+#restaurant main .part_meal .description {
+  width: 100%;
+  padding: 3px 10px;
+}
+#restaurant main .part_meal .description > * {
+  margin: 10px 5px;
+}
+#restaurant main .part_meal .accompaniement {
+  font-weight: normal;
+  display: flex;
+  justify-content: space-between;
+}
+#restaurant main .part_meal .price {
+  position: relative;
+  right: 0px;
+  font-weight: bold;
+}
+#restaurant main .part_meal .check_area {
+  width: 20%;
+  display: none;
+  background-color: #99e2d0;
+  margin-left: 10px;
+}
+#restaurant main .part_meal li:hover .check_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 10ms;
+}
+#restaurant main .part_meal .fa-check {
+  background-color: #ffffff;
+  color: #99e2d0;
+  border-radius: 30px;
+  padding: 5px;
+}
+#restaurant main #command_area {
+  text-align: center;
 }
 
 @media only screen and (max-width: 992px) {
@@ -274,91 +446,6 @@ footer i {
   .card-image {
     height: 130px;
   }
-}
-/*restaurant*/
-#restaurant header i {
-  position: absolute;
-  left: 30px;
-}
-#restaurant header img {
-  width: 100%;
-}
-#restaurant main {
-  padding: 0px 0px;
-  background-color: #f6f6f6;
-}
-#restaurant main h1 {
-  display: flex;
-  justify-content: space-between;
-  background-color: inherit;
-  padding: 30px 10px;
-  border-top-right-radius: 30px;
-  border-top-left-radius: 30px;
-  position: relative;
-  bottom: 70px;
-  margin-bottom: -80px;
-}
-#restaurant main .part_meal {
-  padding: 0px 10px;
-}
-#restaurant main .part_meal h2 {
-  font-variant-caps: all-small-caps;
-  font-weight: normal;
-}
-#restaurant main .part_meal h2::after {
-  content: "_____";
-  display: block;
-  margin: -15px 0px;
-  color: grey;
-}
-#restaurant main .part_meal li {
-  display: flex;
-  flex-wrap: nowrap;
-  font-weight: bold;
-  margin: 40px auto;
-  padding: 0px;
-  box-shadow: 2px 2px 2px grey;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 95%;
-}
-#restaurant main .part_meal .description {
-  width: 100%;
-  padding: 3px 10px;
-}
-#restaurant main .part_meal .description > * {
-  margin: 10px 5px;
-}
-#restaurant main .part_meal .accompaniement {
-  font-weight: normal;
-  display: flex;
-  justify-content: space-between;
-}
-#restaurant main .part_meal .price {
-  position: relative;
-  right: 0px;
-  font-weight: bold;
-}
-#restaurant main .part_meal .check_area {
-  width: 20%;
-  display: none;
-  background-color: #99e2d0;
-  margin-left: 10px;
-}
-#restaurant main .part_meal li:hover .check_area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 10ms;
-}
-#restaurant main .part_meal .fa-check {
-  background-color: #ffffff;
-  color: #99e2d0;
-  border-radius: 30px;
-  padding: 5px;
-}
-#restaurant main #command_area {
-  text-align: center;
 }
 
 /*# sourceMappingURL=style.css.map */
