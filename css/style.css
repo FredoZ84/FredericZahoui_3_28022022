@@ -175,10 +175,13 @@ main {
   font-weight: bold;
   margin: 20px auto;
   padding: 20px 0px;
-  box-shadow: 2px 2px 2px #f6f6f6;
+  box-shadow: 2px 2px 2px #999;
   background-color: #f6f6f6;
   border-radius: 10px;
   width: 300px;
+}
+#functioning li:hover {
+  background-color: #F2EAFB;
 }
 #functioning li::before {
   counter-increment: number;
@@ -198,7 +201,7 @@ main {
   color: #7e7e7e;
   margin-right: 5%;
 }
-#functioning i:hover {
+#functioning li:hover i {
   color: #9356DC;
 }
 
@@ -287,10 +290,14 @@ footer i {
 #restaurant header {
   margin-bottom: -10px;
 }
-#restaurant header i {
+#restaurant header h1 {
+  display: flex;
+  justify-content: center;
+}
+#restaurant header a {
+  align-self: center;
   position: absolute;
-  left: 30px;
-  top: 25px;
+  left: 10px;
 }
 #restaurant header img {
   width: 100%;
@@ -298,7 +305,7 @@ footer i {
   object-fit: cover;
 }
 #restaurant main {
-  padding: 0px 40px;
+  padding: 0px;
   background-color: #f6f6f6;
 }
 #restaurant main h1 {
@@ -315,6 +322,7 @@ footer i {
 #restaurant main .part_meal {
   display: inline-block;
   padding: 0px 10px;
+  width: 33%;
 }
 #restaurant main .part_meal h2 {
   font-variant-caps: all-small-caps;
@@ -329,6 +337,7 @@ footer i {
 #restaurant main .part_meal li {
   display: flex;
   flex-wrap: nowrap;
+  width: 100%;
   font-weight: bold;
   overflow: hidden;
   margin: 40px 0px;
@@ -336,43 +345,61 @@ footer i {
   box-shadow: 2px 2px 2px grey;
   background-color: #ffffff;
   border-radius: 10px;
-  width: 450px;
   animation: appear 3s;
 }
 #restaurant main .part_meal .description {
   width: 100%;
   padding: 3px 10px;
+  transition: width 1s;
+}
+#restaurant main .part_meal .description:hover {
+  width: 80%;
 }
 #restaurant main .part_meal .description > * {
   margin: 10px 5px;
+}
+#restaurant main .part_meal .price {
+  font-weight: bold;
 }
 #restaurant main .part_meal .accompaniement {
   font-weight: normal;
   display: flex;
   justify-content: space-between;
 }
+#restaurant main .part_meal .description h3, #restaurant main .part_meal .accompaniement p:first-child {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 #restaurant main .part_meal .price {
-  position: relative;
-  right: 0px;
   font-weight: bold;
 }
 #restaurant main .part_meal .check_area {
-  width: 20%;
-  display: none;
-  background-color: #99e2d0;
-  margin-left: 10px;
-}
-#restaurant main .part_meal li:hover .check_area {
+  width: 0%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 10ms;
+  background-color: #99e2d0;
+  margin-left: 10px;
+  transform: translateX(100%);
+  transition: transform 1s;
+}
+#restaurant main .part_meal li:hover .check_area {
+  width: 20%;
+  transform: translateX(0%);
 }
 #restaurant main .part_meal .fa-check {
   background-color: #ffffff;
   color: #99e2d0;
   border-radius: 30px;
   padding: 5px;
+  transform: rotate(-270deg);
+  transition: transform 1s;
+  visibility: hidden;
+}
+#restaurant main .part_meal li:hover .fa-check {
+  visibility: visible;
+  transform: rotate(0deg);
 }
 #restaurant main #command_area {
   text-align: center;
@@ -382,6 +409,11 @@ footer i {
   #functioning ol {
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  #restaurant main .part_meal {
+    display: block;
+    width: 100%;
   }
 }
 @media only screen and (max-width: 768px) {

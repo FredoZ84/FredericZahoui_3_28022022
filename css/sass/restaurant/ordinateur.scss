@@ -1,10 +1,15 @@
 #restaurant {
     header {
+        
         margin-bottom: -10px;
-        i {
-            position:absolute;
-            left: 30px;
-            top: 25px
+        h1 {
+            display: flex;
+            justify-content: center;
+        }
+        a {
+            align-self: center;
+            position: absolute;
+            left: 10px;
         }    
         img {
             width: 100%;
@@ -13,7 +18,7 @@
         }
     }
     main {
-        padding: 0px 40px ;
+        padding: 0px;
         background-color: #f6f6f6;
 
         h1 {
@@ -31,6 +36,7 @@
         .part_meal {
             display: inline-block;
             padding: 0px 10px;
+            width: 33%;
 
             h2 {
                 font-variant-caps: all-small-caps;
@@ -46,7 +52,8 @@
 
             li { 
                 display: flex;
-                flex-wrap: nowrap;           
+                flex-wrap: nowrap;
+                width: 100%;          
                 font-weight: bold;
                 overflow: hidden;
                 margin: 40px 0px;
@@ -54,47 +61,65 @@
                 box-shadow: 2px 2px 2px grey;
                 background-color: #ffffff;
                 border-radius: 10px;
-                width: 450px;
                 animation: appear 3s;
             }
             .description {
                 width: 100%;
                 padding: 3px 10px;
+                transition: width 1s;
 
+                &:hover {
+                    width: 80%;
+                }
+                
                 &>* {
                     margin: 10px 5px;
                 }
             }
-
+            .price {
+                font-weight: bold;
+            }
             .accompaniement {
                 font-weight:normal;
                 display: flex;
                 justify-content: space-between;
             }
+            .description h3 , .accompaniement p:first-child {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
 
             .price {
-                position: relative;
-                right: 0px;
                 font-weight: bold;
             }
             .check_area {
-                width: 20%;
-                display: none;
-                background-color:#99e2d0;
-                margin-left: 10px;
-            }
-            li:hover .check_area  {
+                width: 0%;
                 display: flex;
                 justify-content: center;
-                align-items: center;
-                transition: 10ms;
+                align-items: center; 
+                background-color:#99e2d0;
+                margin-left: 10px;
+                transform: translateX(100%);
+                transition: transform 1s;
+            }
+            li:hover .check_area  {  
+                width: 20%;      
+                transform: translateX(0%);
             }
             .fa-check {
                 background-color: #ffffff;
                 color: #99e2d0 ;
                 border-radius: 30px;
                 padding: 5px;
-            }            
+                transform: rotate(-270deg);
+                transition: transform 1s;
+                visibility: hidden;
+            } 
+            li:hover .fa-check {  
+                visibility:visible;     
+                transform: rotate(0deg);
+            }           
         }
         #command_area {
             text-align: center;
