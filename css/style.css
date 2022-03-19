@@ -305,8 +305,9 @@ footer i {
   object-fit: cover;
 }
 #restaurant main {
-  padding: 0px;
+  padding: 0px 0px 10px 0px;
   background-color: #f6f6f6;
+  margin-bottom: unset;
 }
 #restaurant main h1 {
   display: flex;

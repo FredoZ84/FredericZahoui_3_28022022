@@ -57,6 +57,7 @@ $black:#000000;
     margin: 10px;
     animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
+
 .loader div:nth-child(1) {
     animation-delay: -0.24s;
     background-color: $primary;
