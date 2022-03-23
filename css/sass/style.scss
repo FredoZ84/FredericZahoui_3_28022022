@@ -9,6 +9,9 @@ $shadow: #999;
 $other : #F2EAFB;
 $white : #FFFFFF;
 $black:#000000;
+/*-----------------------------------------------------------
+                            ANIMATION                       
+------------------------------------------------------------*/
 @keyframes openning {
     0%,99% {
         z-index: 1;
@@ -36,6 +39,21 @@ $black:#000000;
         transform: translateY(0px);
     }
 }
+@keyframes colorful_fill {
+    @for $i from 0 to  11{
+        #{$i*10}% {
+            background: linear-gradient(white (($i+100-($i*10)-$i)*1%),$secondary,$primary);
+            font-weight:900;
+            background-clip: border-box;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; 
+        }            
+    }
+}
+/*-----------------------------------------------------------
+                            ACCUEIL                       
+------------------------------------------------------------*/
+/* loading Spinner*/
 .loader {
     display: flex;
     position: absolute;
@@ -47,35 +65,37 @@ $black:#000000;
     animation: openning 4s ;
     z-index: -1;
     visibility: hidden;
-}
-.loader::after {
-    content: "Recherche de restaurant";
-}
-.loader div {
-    display: inline-block;
-    width: 16px;
-    margin: 10px;
-    animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+
+    &::after { 
+        content: "Recherche de restaurant";
+    }
+
+    div {
+        display: inline-block;
+        width: 16px;
+        margin: 10px;
+        animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    }
+    $colors: (1: $primary, 2: $secondary, 3: $tertiary);
+
+    @each $position, $color in $colors {
+        div:nth-child(#{$position}) {
+            animation-delay: (-0.24/$position*1s);
+            background-color: $color;
+        }
+    }
 }
 
-.loader div:nth-child(1) {
-    animation-delay: -0.24s;
-    background-color: $primary;
-}
-.loader div:nth-child(2) {
-    animation-delay: -0.12s;
-    background-color: $secondary;
-}
-.loader div:nth-child(3) {
-    animation-delay: 0;
-    background-color: $tertiary;
-}
+/*caractéristiques générales*/
 * {
     font-family: 'Roboto';
     box-sizing: border-box;
 }
 html {
     line-height: unset;
+}
+p, li, input {
+    font-size: 0.95em;
 }
 a { 
     color: $black; 
@@ -91,62 +111,16 @@ header, .section_title {
 h1 {
     font-family: 'Shrikhand';
     font-weight: unset;
-    font-size: 5em;
+    font-size: 2em;
     margin: 5px auto;
-}
-#slogan br {
-    display: none;
-}
-form {
-    background-color: #f6f6f6;
-    height: 300px;
-}
-.card a {
-    pointer-events: initial;
-}
-.fa-heart {
-    font-size: xx-large;
-    height: fit-content;
-    transition: color 400ms;
-
-    &:hover {
-        font-weight: 900;
-        color:$primary;        
-    }
-}
-#location>label {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;        
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    background-color: #eaeaea;
-    box-shadow:inset 0px 5px 5px #d1d1d1;
-
-    &>* {
-        margin-top: 5px;
-        height: 40px;
-        border: unset;
-    }
-    i {
-        font-size: 20px;
-        padding: 10px 10px 10px 20px;
-    }
-    input {  
-        font-weight: bold;
-        background-color: unset;
-        width: 170px;     
-        padding-left: 10px;
-    }
 }
 .my_button{
     display: block;
-    width: 60%;
+    width: 210px;
+    padding: 15px;
     margin: 30px auto;
     color: $white;
-    background: linear-gradient($secondary, $primary);
-    padding: 15px 25px;
+    background: linear-gradient($secondary, $primary);        
     border-radius: 30px;
     border-color: unset;
     box-shadow: 2px 2px 2px lightgrey;
@@ -158,97 +132,168 @@ form {
         box-shadow: 3px 3px 3px grey;
     }
 }
-main {
-    padding: 1%;
-}
-#functioning {
-    ol {
-        display:flex;
-        counter-reset: number;
-    }
-    li {
-        font-weight: bold;
-        margin: 20px auto;
-        padding: 20px 0px;
-        box-shadow: 2px 2px 2px $shadow;
-        background-color: #f6f6f6;
-        border-radius: 10px;
-        width: 300px;
+.fa-heart {
+    font-size: xx-large;
+    height: fit-content;          
 
-        &:hover {
-            background-color: $other;
+    &:hover {  
+        animation: colorful_fill 400ms  ease; 
+        font-weight: 900;    
+        background: linear-gradient(-5deg,$secondary,$primary);
+        background-clip: border-box;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;      
+    }
+}
+#home {
+    form {
+        background-color: #f6f6f6;
+        height: 300px;
+    }
+    #location>label {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;        
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        background-color: #eaeaea;
+        box-shadow:inset 0px 5px 5px #d1d1d1;
+    
+        &>* {
+            margin-top: 5px;
+            height: 40px;
+            border: unset;
+        }
+        i {
+            font-size: 20px;
+            padding: 10px 10px 10px 20px;
+        }
+        input {  
+            font-weight: bold;
+            background-color: unset;
+            width: 170px;     
+            padding-left: 10px;
         }
     }
-    li::before {
-        counter-increment: number;
-        content: counter(number)"\a0";
-        color: $white;
-        background-color: $primary;
-        padding: 5px 7px 5px 10px;
-        border-radius: 15px;
-        position: relative;
-        right: 14px;
-        box-shadow: 2px 2px 2px #d1d1d1; 
+    #slogan>p {
+        padding: 0 1%;
     }
-    i {
-        width: 5%;
-        text-align: center;
-        font-size: 20px;
-        color: #7e7e7e;
-        margin-right: 5%;
+    #slogan br {
+        display: inline;
     }
-    li:hover i { 
-        color: $primary ;
+    main {
+        padding: 0px 10px;
+        margin-bottom:60px;
     }
-}
-#restaurants_list ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.card {    
-    margin: 20px; 
-    background-color: $white; 
-    box-shadow: 0px 5px 20px $shadow; 
-    overflow: hidden;
-    border-radius: 30px;
-    width: 500px;
-}
-.card-image {
-    height: 300px;
-    position: relative;
-    overflow: hidden;
-    text-align: right;
+    .section_title {
+        text-align: initial;
+    }
+    
+    #functioning {
+        ol {
+            display:flex;
+            flex-direction: column;
+            counter-reset: number;
+        }
+        li {
+            font-weight: bold;
+            margin: 20px auto;
+            padding: 20px 0px;
+            box-shadow: 2px 2px 2px $shadow;
+            background-color: #f6f6f6;
+            border-radius: 10px;
+            width: 90%;
+    
+            &:hover {
+                background-color: $other;
+            }
+        }
+        li::before {
+            counter-increment: number;
+            content: counter(number)"\a0";
+            color: $white;
+            background-color: $primary;
+            padding: 5px 7px 5px 10px;
+            border-radius: 15px;
+            position: relative;
+            right: 14px;
+            box-shadow: 2px 2px 2px #d1d1d1; 
+        }
+        i {
+            width: 5%;
+            text-align: center;
+            font-size: 20px;
+            color: #7e7e7e;
+            margin-right: 5%;
+        }
+        li:hover i { 
+            color: $primary ;
+        }
+    }
+    #restaurants_list  {
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }     
 
-    img {
-        width: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        .card {
+            width: 335px;    
+            margin: 20px;
+            text-align: right; 
+            background-color: $white; 
+            box-shadow: 0px 5px 20px $shadow; 
+            overflow: hidden;
+            border-radius: 30px;        
+        }
+        .card-image {
+            margin-top: -20px;
+            padding-bottom: 50%;
+            position: relative;
+            overflow: hidden;
+            text-align: right;
+        
+            img {
+                width: 100%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        .card-body {
+            padding: 10px 15px; 
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            text-align: initial;  
+        }
+        .description>*>* {
+            margin: 0px;
+        }
+        .new::before {
+            content: "Nouveau";
+            position: relative;
+            z-index: 1;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: darkslategrey;
+            border-radius: 2px;
+            top: 30px;
+            margin-right: 10px;
+        }
     }
+    
 }
-.card-body {
-    padding: 10px 15px; 
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;        
-}
-.description>*>* {
-    margin: 0px;
-}
-.new .card-image::before {
-    content: "Nouveau";
-    position: relative;
-    z-index: 1;
-    padding: 10px 15px;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: darkslategrey;
-    border-radius: 2px;
-    top: 30px;
-    margin-right: 10px;
-}
+/*-----------------------------------------------------------
+                            RETAURANT                       
+------------------------------------------------------------*/
+@import "restaurant/mobile.scss";
+/*-----------------------------------------------------------
+                            PIED DE PAGE                       
+------------------------------------------------------------*/
 footer {
     background-color: #353535;
     color: white;
@@ -256,12 +301,11 @@ footer {
 
     h1 {
         font-size: 20px;
-        text-align: center;
+        text-align: initial;
     }
     ul {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: nowrap;
+        display: block;
+        
     }
     li {
         margin: 5px 0px;
@@ -276,9 +320,8 @@ footer {
     }
 }
 /*-----------------------------------------------------------
-                            RETAURANT                       
+                            FORMAT TABLETTE                       
 ------------------------------------------------------------*/
-@import "restaurant/ordinateur.scss";
 @media only screen and (max-width: 992px) {
     #functioning {
         ol {
@@ -288,61 +331,59 @@ footer {
     }
     @import "restaurant/tablette.scss"
 }
-@media only screen and (max-width: 768px) { 
-    p, li, input {
-        font-size: 0.95em;
-    }
+/*-----------------------------------------------------------
+                            FORMAT DESKTOP                       
+------------------------------------------------------------*/
+@media only screen and (min-width: 992px) { 
     h1 {
-        font-size: 2em;
+        font-size: 5em;
     }
-    #slogan>p {
-        padding: 0 1%;
-    }
-    #slogan br {
-        display: inline;
-    }
-    .my_button {
-        width: 210px;
-        padding: 15px;
-    }
-    main {
-        padding: 0px 10px;
-        margin-bottom:60px;
-    }
-    .section_title {
-        text-align: initial;
-    }
-    #functioning {
-        ol {
-            flex-direction: column;            
+    p, li, input {
+        font-size: 1em;
+    }    
+    #home {
+        #slogan>p {
+            padding: 0 0%;
         }
-        li {
-            width: 90%;
+        #slogan br {
+            display: none;
         }
-    }
-    .card {
-        width: 335px;
-    }
-    .card-image { 
-        height: 200px;
+        main {
+            padding: 1%;
+        }
+        .section_title {
+            text-align: center;
+        }
+        #functioning {
+            ol {
+                flex-direction: row;            
+            }
+            li {
+                width: 300px;
+            }
+        }
+        #restaurants_list {
+            .card {
+                width: 500px;
+            }
+            .card-image { 
+                height: 300px;
+            }
+        }
     }
     footer {
         h1 {
-            text-align: initial;
+            text-align: center;
         }
         ul {
-            display: block;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: nowrap;
         }
     }
-    @import "restaurant/mobile.scss";
+    /*-----------------------------------------------------------
+                            RETAURANT                       
+    ------------------------------------------------------------*/
+    @import "restaurant/ordinateur.scss";   
+    
 }
-/* Petites résolutions mobiles*/
-@media only screen and (max-width: 360px) { 
-    .card {
-        width: 230px;
-    }
-    .card-image { 
-        height: 130px;
-    }
-}
-
